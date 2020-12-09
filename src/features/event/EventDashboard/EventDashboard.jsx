@@ -1,8 +1,8 @@
-import cuid from "cuid";
-import React, { Component } from "react";
-import { Button, Grid, GridColumn } from "semantic-ui-react";
-import EventForm from "../EventForm/EventForm";
-import EventList from "../EventList/EventList";
+import cuid from 'cuid';
+import React, { Component } from 'react';
+import { Button, Grid, GridColumn } from 'semantic-ui-react';
+import EventForm from '../EventForm/EventForm';
+import EventList from '../EventList/EventList';
 
 const eventsFromDashboard = [
   {
@@ -58,11 +58,9 @@ const eventsFromDashboard = [
       }
     ]
   }
-]
-
+];
 
 class EventDashboard extends Component {
-
   state = {
     events: eventsFromDashboard,
     isOpen: false,
@@ -79,53 +77,52 @@ class EventDashboard extends Component {
     this.setState({
       isOpen: true,
       selectedEvent: null
-    })
-  }
+    });
+  };
 
   handleFormCancel = () => {
     this.setState({
       isOpen: false
-    })
-  }
+    });
+  };
 
   handleCreateEvent = (newEvent) => {
     newEvent.id = cuid();
-    newEvent.hostPhotoURL = 'assets/user.png'
+    newEvent.hostPhotoURL = 'assets/user.png';
     this.setState(({ events }) => ({
       events: [...events, newEvent],
       isOpen: false
-    }))
-  }
+    }));
+  };
 
   handleSelectedEvent = (event) => {
     this.setState({
       selectedEvent: event,
       isOpen: true
-    })
-  }
+    });
+  };
 
   handleUpdateEvent = (updatedEvent) => {
     this.setState(({ events }) => ({
-      events: events.map(event => {
+      events: events.map((event) => {
         if (event.id === updatedEvent.id) {
-          return { ...updatedEvent }
+          return { ...updatedEvent };
         } else {
-          return event
+          return event;
         }
       }),
       isOpen: false,
       selectedEvent: null
-    }))
-  }
+    }));
+  };
 
   handleDeleteEvent = (id) => {
     this.setState(({ events }) => ({
-      events: events.filter(e => e.id !== id)
-    }))
-  }
+      events: events.filter((e) => e.id !== id)
+    }));
+  };
 
   render() {
-
     const { events, isOpen, selectedEvent } = this.state;
 
     return (
@@ -134,13 +131,14 @@ class EventDashboard extends Component {
           <EventList
             events={events}
             selectEvent={this.handleSelectedEvent}
-            deleteEvent={this.handleDeleteEvent} />
+            deleteEvent={this.handleDeleteEvent}
+          />
         </GridColumn>
         <GridColumn width={6}>
           <Button
             onClick={this.handleCreateFormOpen}
             positive
-            content='Create Event'
+            content="Create Event"
           />
           {isOpen && (
             <EventForm
