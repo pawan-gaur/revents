@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import EventDashboard from '../../features/event/EventDashboard/EventDashboard';
 import NavBar from '../../features/nav/NavBar/NavBar';
 import { Container } from 'semantic-ui-react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import EventDetailedPage from '../../features/event/EventDetailed/EventDetailedPage';
 import PeopleDashboard from '../../features/user/PeopleDashboard/PeopleDashboard';
@@ -23,13 +23,27 @@ class App extends Component {
             <Fragment>
               <NavBar />
               <Container className="main">
-                <Route exact path="/events" component={EventDashboard} />
-                <Route exact path="/events/:id" component={EventDetailedPage} />
-                <Route exact path="/people" component={PeopleDashboard} />
-                <Route exact path="/profile/:id" component={UserDetailedPage} />
-                <Route path="/settings" component={SettingsDashboard} />
-                <Route exact path="/createEvent" component={EventForm} />
-                <Route exact path="/test" component={TestComponent} />
+                <Switch key={this.props.location.key}>
+                  <Route exact path="/events" component={EventDashboard} />
+                  <Route
+                    exact
+                    path="/events/:id"
+                    component={EventDetailedPage}
+                  />
+                  <Route exact path="/people" component={PeopleDashboard} />
+                  <Route
+                    exact
+                    path="/profile/:id"
+                    component={UserDetailedPage}
+                  />
+                  <Route path="/settings" component={SettingsDashboard} />
+                  <Route
+                    exact
+                    path={['/createEvent', '/manage/:id']}
+                    component={EventForm}
+                  />
+                  <Route exact path="/test" component={TestComponent} />
+                </Switch>
               </Container>
             </Fragment>
           )}
@@ -39,4 +53,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
